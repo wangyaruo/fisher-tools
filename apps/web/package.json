@@ -1,0 +1,27 @@
+{
+  "name": "@fisher-tools/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "钓鱼助手前端：气象曲线、月相潮汐与钓鱼指数看板",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "vue-tsc --noEmit && vite build",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "echarts": "^5.6.0",
+    "element-plus": "^2.9.3",
+    "marked": "^15.0.6",
+    "pinia": "^2.3.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vue-tsc": "^2.2.0"
+  }
+}
