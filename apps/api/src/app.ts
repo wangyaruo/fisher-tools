@@ -4,6 +4,7 @@ import { ZodError } from 'zod'
 import { registerAstronomyRoutes } from './routes/astronomy.js'
 import { registerForecastRoutes } from './routes/forecast.js'
 import { registerHealthRoutes } from './routes/health.js'
+import { registerTideRoutes } from './routes/tide.js'
 
 /** 上游数据源不可用或返回异常结构时抛出，由错误处理器统一映射为 502。 */
 export class UpstreamError extends Error {
@@ -70,6 +71,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   // 业务接口统一挂在 /api 前缀下
   registerForecastRoutes(app)
   registerAstronomyRoutes(app)
+  registerTideRoutes(app)
 
   return app
 }

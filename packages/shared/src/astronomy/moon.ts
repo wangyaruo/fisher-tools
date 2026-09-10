@@ -54,6 +54,20 @@ function previousNewMoon(date: Date): Date {
   return found.date
 }
 
+/**
+ * 只取相位与照度，不做任何升落搜索。
+ * 适用于需要按天批量扫描相位的场景（例如推算大潮小潮窗口），
+ * 比完整调用 computeMoonInfo 少做 5 次天文搜索。
+ */
+export function moonPhaseAt(at: Date): { phase: number; illuminatedFraction: number } {
+  const phaseLon = Astronomy.MoonPhase(at)
+  const illumination = Astronomy.Illumination(Astronomy.Body.Moon, at)
+  return {
+    phase: round((((phaseLon / 360) % 1) + 1) % 1, 4),
+    illuminatedFraction: round(clamp(illumination.phase_fraction, 0, 1), 4),
+  }
+}
+
 export interface ComputeMoonParams {
   /** 本地日期，YYYY-MM-DD */
   date: string
