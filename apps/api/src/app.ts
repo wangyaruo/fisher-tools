@@ -1,6 +1,7 @@
 import cors from '@fastify/cors'
 import Fastify, { type FastifyInstance } from 'fastify'
 import { ZodError } from 'zod'
+import { registerAstronomyRoutes } from './routes/astronomy.js'
 import { registerForecastRoutes } from './routes/forecast.js'
 import { registerHealthRoutes } from './routes/health.js'
 
@@ -68,6 +69,7 @@ export async function buildApp(): Promise<FastifyInstance> {
 
   // 业务接口统一挂在 /api 前缀下
   registerForecastRoutes(app)
+  registerAstronomyRoutes(app)
 
   return app
 }
