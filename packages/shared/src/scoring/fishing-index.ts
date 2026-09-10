@@ -13,8 +13,9 @@ import type {
   SunTimes,
   TideWindowKind,
 } from '../schemas'
-import { clamp, mean, piecewise, round, sum } from '../utils/number'
+import { clamp, piecewise, round, sum } from '../utils/number'
 import { formatLocalDateTime, isWithin } from '../utils/time'
+import { moonActivityFromIllumination } from '../astronomy/moon'
 import { FACTOR_LABELS, FACTOR_WEIGHTS, NEUTRAL_SCORE } from './weights'
 
 interface FactorResult {
@@ -92,13 +93,17 @@ function scorePressureLevel(weather: HourlyWeatherPoint | null): FactorResult {
 }
 
 /**
- * 气温。作为水温代理指标。
+ * 水温或气温。有海表水温时优先使用，它比气温更接近鱼类实际所处环境。
  * 依据：多数常见淡水鱼种在 15-25°C 区间摄食最积极，低于 8°C 或高于 30°C 明显减弱。
  */
-function scoreTemperature(weather: HourlyWeatherPoint | null): FactorResult {
-  const t = weather?.temperature ?? null
-  if (t === null) return MISSING('气温')
-  const rawScore = piecewise(t, [
+function scoreTemperature(
+  weather: HourlyWeatherPoint | null,
+  marine: MarineHourlyPoint | null | undefined,
+): FactorResult {
+  const seaTemperature = marine?.seaSurfaceTemperature ?? null
+  const value = seaTemperature ?? weather?.temperature ?? null
+  if (value === null) return MISSING('气温/水温')
+  const rawScore = piecewise(value, [
     [-5, 15],
     [2, 32],
     [8, 52],
@@ -109,7 +114,8 @@ function scoreTemperature(weather: HourlyWeatherPoint | null): FactorResult {
     [35, 35],
     [40, 20],
   ])
-  return { rawScore, detail: `气温 ${round(t, 1)} °C`, degraded: false }
+  const label = seaTemperature !== null ? '海表水温' : '气温（水温代理）'
+  return { rawScore, detail: `${label} ${round(value, 1)} °C`, degraded: false }
 }
 
 /**
@@ -182,15 +188,8 @@ function scoreCloudCover(weather: HourlyWeatherPoint | null): FactorResult {
  * 月相盈亏。
  * 依据：朔望（新月与满月）时月球引潮力叠加，潮差最大、夜行性鱼种摄食活跃；
  * 上下弦（方照）时引潮力相互抵消，是公认的弱时段。
+ * 打分函数本体见 astronomy/moon.ts 的 moonActivityFromIllumination。
  */
-export function moonActivityFromIllumination(illuminatedFraction: number): number {
-  const frac = clamp(illuminatedFraction, 0, 1)
-  const newMoonProximity = clamp(1 - Math.min(frac, 1 - frac) / 0.25, 0, 1)
-  const fullMoonProximity = clamp(1 - Math.abs(frac - 0.5) / 0.25, 0, 1)
-  const proximity = Math.max(newMoonProximity, fullMoonProximity)
-  return 40 + 55 * proximity
-}
-
 function scoreMoonPhase(moon: MoonInfo | null | undefined): FactorResult {
   if (!moon) return MISSING('月相')
   const rawScore = moonActivityFromIllumination(moon.illuminatedFraction)
@@ -308,7 +307,7 @@ export function scoreFishingIndex(params: ScoreFishingIndexParams): FishingIndex
   const raw: Record<keyof typeof FACTOR_WEIGHTS, FactorResult> = {
     pressure_trend: scorePressureTrend(pressureTrend),
     pressure_level: scorePressureLevel(weather),
-    temperature: scoreTemperature(weather),
+    temperature: scoreTemperature(weather, marine),
     diurnal_range: scoreDiurnalRange(diurnalRange),
     wind: scoreWind(weather),
     cloud_cover: scoreCloudCover(weather),

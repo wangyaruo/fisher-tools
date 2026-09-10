@@ -1,5 +1,3 @@
-import type { AstronomyBundle, Forecast } from '../schemas'
-
 interface TimeZoneParts {
   year: string
   month: string

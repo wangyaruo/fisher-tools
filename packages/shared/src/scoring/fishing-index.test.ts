@@ -6,7 +6,8 @@ import type {
   Solunar,
   TideWindowKind,
 } from '../schemas'
-import { moonActivityFromIllumination, scoreFishingIndex } from './fishing-index'
+import { moonActivityFromIllumination } from '../astronomy/moon'
+import { scoreFishingIndex } from './fishing-index'
 import { assertWeightsNormalized, FACTOR_WEIGHTS } from './weights'
 
 const TIME_ZONE = 'Asia/Shanghai'
