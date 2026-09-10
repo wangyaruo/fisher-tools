@@ -43,6 +43,20 @@ body {
   padding: 20px 20px 64px;
 }
 
+/*
+ * 页面级纵向节奏。
+ * 此前每个板块靠标签上的 style="margin-top: 16px" 拉开间距（共 14 处），
+ * 布局意图散落在标记里，改一次间距要逐个标签找。改为由容器统一决定。
+ */
+.ft-page > * + * {
+  margin-top: 16px;
+}
+
+/* 侧栏内板块间距略紧，用于知识库左栏 */
+.ft-side-stack > * + * {
+  margin-top: 14px;
+}
+
 .ft-grid {
   display: grid;
   gap: 16px;
@@ -81,6 +95,81 @@ body {
   margin: 0 0 14px;
   font-size: 12px;
   color: var(--ft-text-muted);
+}
+
+/*
+ * 名称—取值列表（配合 KeyValueList 组件）。
+ * 这段规则此前逐字抄在两个页面的 scoped 样式里（各 26 行），
+ * 属于跨页面共用的版式，归到全局。
+ */
+.ft-kv {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ft-kv > div {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13px;
+}
+
+.ft-kv dt {
+  color: var(--ft-text-muted);
+  min-width: 92px;
+  flex-shrink: 0;
+}
+
+.ft-kv dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.ft-kv--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+
+.ft-kv--inline > div {
+  flex-direction: column;
+  gap: 0;
+}
+
+.ft-kv--inline dt {
+  min-width: 0;
+  font-size: 12px;
+}
+
+/* 一排并列的关键数值（配合 FigureRow 组件） */
+.ft-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ft-text-muted);
+}
+
+.ft-figures strong {
+  color: var(--ft-text);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 卡片内的跳转入口 */
+.ft-more {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--ft-accent);
+  text-decoration: none;
+}
+
+.ft-more:hover {
+  text-decoration: underline;
 }
 
 .ft-metric {
