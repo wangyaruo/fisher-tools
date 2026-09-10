@@ -12,7 +12,7 @@ export const router = createRouter({
     {
       path: '/weather',
       name: 'weather',
-      component: () => import('@/views/WeatherView.vue'),
+      component: () => import('@/views/weather/WeatherView.vue'),
       meta: { title: '气象曲线' },
     },
     {
