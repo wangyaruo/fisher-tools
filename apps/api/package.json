@@ -1,0 +1,23 @@
+{
+  "name": "@fisher-tools/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "钓鱼助手后端：聚合气象、天文与潮汐数据并输出可解释的钓鱼指数",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.2",
+    "@fisher-tools/shared": "workspace:*",
+    "fastify": "^5.2.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
