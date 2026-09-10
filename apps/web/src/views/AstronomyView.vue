@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import EChart from '@/components/EChart.vue'
+import EChart from '@/components/base/EChart.vue'
 import MoonPhaseGlyph from '@/components/MoonPhaseGlyph.vue'
 import { CHART_COLORS } from '@/lib/echarts'
 import { useOverviewStore } from '@/stores/overview'

@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import ConditionGrid from '@/components/ConditionGrid.vue'
-import EChart from '@/components/EChart.vue'
+import EChart from '@/components/base/EChart.vue'
 import FishingIndexCard from '@/components/FishingIndexCard.vue'
 import { useOverviewStore } from '@/stores/overview'
 import { buildPressureOption } from '@/utils/charts'

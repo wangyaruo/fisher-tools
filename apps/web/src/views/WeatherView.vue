@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import EChart from '@/components/EChart.vue'
+import EChart from '@/components/base/EChart.vue'
 import { useOverviewStore } from '@/stores/overview'
 import {
   buildDiurnalRangeOption,
