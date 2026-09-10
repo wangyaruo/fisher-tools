@@ -1,0 +1,39 @@
+{
+  "name": "fisher-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "钓鱼助手：气象、气压趋势、月相、潮汐、昼夜温差与可解释的钓鱼指数",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.25.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:api": "pnpm --filter @fisher-tools/api dev",
+    "dev:web": "pnpm --filter @fisher-tools/web dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "format": "prettier --write \"**/*.{ts,vue,json,md,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,vue,json,md,yaml,yml}\""
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "vue-demi"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100,
+    "trailingComma": "all",
+    "arrowParens": "always"
+  }
+}
