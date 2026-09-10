@@ -18,7 +18,7 @@ export const router = createRouter({
     {
       path: '/astronomy',
       name: 'astronomy',
-      component: () => import('@/views/AstronomyView.vue'),
+      component: () => import('@/views/astronomy/AstronomyView.vue'),
       meta: { title: '日月与潮汐' },
     },
     {
