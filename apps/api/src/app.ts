@@ -5,6 +5,7 @@ import { registerAstronomyRoutes } from './routes/astronomy.js'
 import { registerForecastRoutes } from './routes/forecast.js'
 import { registerFishingIndexRoutes } from './routes/fishing-index.js'
 import { registerHealthRoutes } from './routes/health.js'
+import { registerKnowledgeRoutes } from './routes/knowledge.js'
 import { registerTideRoutes } from './routes/tide.js'
 
 /** 上游数据源不可用或返回异常结构时抛出，由错误处理器统一映射为 502。 */
@@ -74,6 +75,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   registerAstronomyRoutes(app)
   registerTideRoutes(app)
   registerFishingIndexRoutes(app)
+  registerKnowledgeRoutes(app)
 
   return app
 }
