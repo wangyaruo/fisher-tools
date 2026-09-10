@@ -6,7 +6,7 @@ export const router = createRouter({
     {
       path: '/',
       name: 'overview',
-      component: () => import('@/views/OverviewView.vue'),
+      component: () => import('@/views/overview/OverviewView.vue'),
       meta: { title: '垂钓总览' },
     },
     {
