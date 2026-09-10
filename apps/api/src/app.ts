@@ -1,6 +1,7 @@
 import cors from '@fastify/cors'
 import Fastify, { type FastifyInstance } from 'fastify'
 import { ZodError } from 'zod'
+import { registerForecastRoutes } from './routes/forecast.js'
 import { registerHealthRoutes } from './routes/health.js'
 
 /** 上游数据源不可用或返回异常结构时抛出，由错误处理器统一映射为 502。 */
@@ -64,6 +65,9 @@ export async function buildApp(): Promise<FastifyInstance> {
 
   // 健康检查与自描述信息挂在根路径，便于容器探针直接使用
   registerHealthRoutes(app)
+
+  // 业务接口统一挂在 /api 前缀下
+  registerForecastRoutes(app)
 
   return app
 }
