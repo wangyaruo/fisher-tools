@@ -3,6 +3,7 @@ import Fastify, { type FastifyInstance } from 'fastify'
 import { ZodError } from 'zod'
 import { registerAstronomyRoutes } from './routes/astronomy.js'
 import { registerForecastRoutes } from './routes/forecast.js'
+import { registerFishingIndexRoutes } from './routes/fishing-index.js'
 import { registerHealthRoutes } from './routes/health.js'
 import { registerTideRoutes } from './routes/tide.js'
 
@@ -72,6 +73,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   registerForecastRoutes(app)
   registerAstronomyRoutes(app)
   registerTideRoutes(app)
+  registerFishingIndexRoutes(app)
 
   return app
 }
