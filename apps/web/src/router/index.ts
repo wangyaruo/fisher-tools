@@ -25,7 +25,7 @@ export const router = createRouter({
       // 列表与详情共用同一个视图组件，由路由参数区分展示形态
       path: '/knowledge/:slug?',
       name: 'knowledge',
-      component: () => import('@/views/KnowledgeView.vue'),
+      component: () => import('@/views/knowledge/KnowledgeView.vue'),
       meta: { title: '知识库' },
     },
     { path: '/:pathMatch(.*)*', redirect: '/' },
