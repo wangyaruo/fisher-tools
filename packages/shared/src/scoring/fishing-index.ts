@@ -16,6 +16,7 @@ import type {
 import { clamp, piecewise, round, sum } from '../utils/number'
 import { formatLocalDateTime, isWithin } from '../utils/time'
 import { moonActivityFromIllumination } from '../astronomy/moon'
+import { GRADE_THRESHOLDS } from './factor-guides'
 import { FACTOR_LABELS, FACTOR_WEIGHTS, NEUTRAL_SCORE } from './weights'
 
 interface FactorResult {
@@ -264,13 +265,8 @@ function scorePrecipitation(weather: HourlyWeatherPoint | null): FactorResult {
   return { rawScore, detail: `该小时降水 ${round(rain, 1)} mm`, degraded: false }
 }
 
-const GRADE_TABLE: ReadonlyArray<{ min: number; grade: FishingGrade; label: string }> = [
-  { min: 80, grade: 'excellent', label: '极佳' },
-  { min: 65, grade: 'good', label: '较好' },
-  { min: 45, grade: 'fair', label: '一般' },
-  { min: 30, grade: 'poor', label: '较差' },
-  { min: 0, grade: 'bad', label: '很差' },
-]
+const GRADE_TABLE: ReadonlyArray<{ min: number; grade: FishingGrade; label: string }> =
+  GRADE_THRESHOLDS
 
 function gradeOf(score: number): { grade: FishingGrade; label: string } {
   const hit = GRADE_TABLE.find((g) => score >= g.min) ?? GRADE_TABLE[GRADE_TABLE.length - 1]!

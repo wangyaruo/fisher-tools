@@ -10,6 +10,7 @@
     ".": "./src/index.ts",
     "./schemas": "./src/schemas/index.ts",
     "./scoring": "./src/scoring/index.ts",
+    "./scoring/guides": "./src/scoring/guides.ts",
     "./astronomy": "./src/astronomy/index.ts",
     "./utils": "./src/utils/index.ts"
   },

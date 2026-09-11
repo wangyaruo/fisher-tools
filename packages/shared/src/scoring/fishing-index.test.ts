@@ -7,6 +7,7 @@ import type {
   TideWindowKind,
 } from '../schemas'
 import { moonActivityFromIllumination } from '../astronomy/moon'
+import { FACTOR_COUNT, FACTOR_GUIDES, GRADE_THRESHOLDS } from './factor-guides'
 import { scoreFishingIndex } from './fishing-index'
 import { assertWeightsNormalized, FACTOR_WEIGHTS } from './weights'
 
@@ -250,5 +251,65 @@ describe('钓鱼指数', () => {
         result.negatives[i]!.contribution,
       )
     }
+  })
+})
+
+/**
+ * 因子解读表与等级阈值表是「指数解读」页面的数据来源。
+ * 这两组断言的作用是防止页面与模型各自漂移 ——
+ * 页面说的依据、阈值与代码实际执行的对不上，是最难被其它测试发现的一类错误。
+ */
+describe('因子解读表', () => {
+  it('每个因子都有解读，不多也不少', () => {
+    expect(Object.keys(FACTOR_GUIDES).sort()).toEqual(Object.keys(FACTOR_WEIGHTS).sort())
+    expect(FACTOR_COUNT).toBe(Object.keys(FACTOR_WEIGHTS).length)
+  })
+
+  it('每条解读的四个字段都有实质内容', () => {
+    for (const [key, guide] of Object.entries(FACTOR_GUIDES)) {
+      expect(guide.basis.length, `${key}.basis`).toBeGreaterThan(10)
+      expect(guide.best.length, `${key}.best`).toBeGreaterThan(0)
+      expect(guide.worst.length, `${key}.worst`).toBeGreaterThan(0)
+      expect(guide.reading.length, `${key}.reading`).toBeGreaterThan(10)
+    }
+  })
+
+  it('解读表覆盖的因子与权重表一一对应，不存在拼写偏差', () => {
+    for (const key of Object.keys(FACTOR_GUIDES)) {
+      expect(FACTOR_WEIGHTS).toHaveProperty(key)
+    }
+  })
+})
+
+describe('等级阈值表', () => {
+  it('按 min 严格降序排列，且以 0 收尾', () => {
+    const mins = GRADE_THRESHOLDS.map((g) => g.min)
+    expect(mins).toEqual([...mins].sort((a, b) => b - a))
+    expect(mins[mins.length - 1]).toBe(0)
+  })
+
+  it('打分函数返回的等级与文案必定来自阈值表', () => {
+    const labels = new Set(GRADE_THRESHOLDS.map((g) => g.label))
+    const grades = new Set(GRADE_THRESHOLDS.map((g) => g.grade))
+
+    const cases = [
+      baseParams(),
+      baseParams({
+        weather: makeWeather({ windSpeed: 60, precipitation: 20, surfacePressure: 970, temperature: 38 }),
+        pressureTrend: makeTrend({ delta3h: 6 }),
+      }),
+      baseParams({ weather: null, pressureTrend: null }),
+    ]
+
+    for (const params of cases) {
+      const result = scoreFishingIndex(params)
+      expect(labels.has(result.gradeLabel), `未在阈值表中的文案：${result.gradeLabel}`).toBe(true)
+      expect(grades.has(result.grade), `未在阈值表中的等级：${result.grade}`).toBe(true)
+    }
+  })
+
+  it('阈值表的等级文案与 grade 字段一一对应，没有重复定义', () => {
+    const byGrade = new Map(GRADE_THRESHOLDS.map((g) => [g.grade, g.label]))
+    expect(byGrade.size).toBe(GRADE_THRESHOLDS.length)
   })
 })
