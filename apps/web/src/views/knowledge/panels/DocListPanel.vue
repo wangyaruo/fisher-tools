@@ -50,7 +50,7 @@ const title = computed(() => (props.searchResult ? '检索结果' : '文档'))
               </span>
               <!-- 片段在 highlightSnippet 内先转义再插标记，顺序不能反 -->
               <span
-                class="ft-doc__snippet"
+                class="ft-doc__snippet ft-hl"
                 v-html="highlightSnippet(hit.snippet, searchResult.query)"
               ></span>
             </button>
@@ -134,13 +134,5 @@ const title = computed(() => (props.searchResult ? '检索结果' : '文档'))
   font-size: 12px;
   color: var(--ft-text-muted);
   line-height: 1.6;
-}
-
-/* 高亮标记由 v-html 注入，不在本组件的编译作用域内，必须用 :deep */
-.ft-doc__snippet :deep(mark) {
-  background: var(--ft-warn-soft);
-  color: #6b4a12;
-  padding: 0 2px;
-  border-radius: 3px;
 }
 </style>

@@ -208,6 +208,19 @@ body {
   line-height: 1.7;
 }
 
+/*
+ * 检索关键词高亮。
+ * 标记由 highlightSnippet 生成、经 v-html 注入，不在组件的编译作用域内，
+ * 因此样式必须放在全局，并在容器上挂 .ft-hl。
+ * 知识库检索结果与术语表两处共用这段规则。
+ */
+.ft-hl mark {
+  background: var(--ft-warn-soft);
+  color: #6b4a12;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
 .ft-disclaimer {
   margin-top: 12px;
   padding: 10px 12px;

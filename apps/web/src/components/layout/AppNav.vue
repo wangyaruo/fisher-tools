@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { path: '/weather', label: '气象曲线' },
   { path: '/astronomy', label: '日月与潮汐' },
   { path: '/knowledge', label: '知识库' },
+  { path: '/glossary', label: '术语表' },
 ] as const
 
 const store = useLocationStore()

@@ -28,6 +28,12 @@ export const router = createRouter({
       component: () => import('@/views/knowledge/KnowledgeView.vue'),
       meta: { title: '知识库' },
     },
+    {
+      path: '/glossary',
+      name: 'glossary',
+      component: () => import('@/views/glossary/GlossaryView.vue'),
+      meta: { title: '垂钓术语表' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: () => ({ top: 0 }),
