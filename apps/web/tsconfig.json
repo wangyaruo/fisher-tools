@@ -8,7 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@fisher-tools/shared/schemas": ["../../packages/shared/src/schemas/index.ts"]
+      "@fisher-tools/shared/schemas": ["../../packages/shared/src/schemas/index.ts"],
+      "@fisher-tools/shared/scoring/guides": ["../../packages/shared/src/scoring/guides.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "env.d.ts", "vite.config.ts"]

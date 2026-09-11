@@ -10,6 +10,8 @@ const NAV_ITEMS = [
   { path: '/astronomy', label: '日月与潮汐' },
   { path: '/knowledge', label: '知识库' },
   { path: '/glossary', label: '术语表' },
+  { path: '/scoring', label: '指数解读' },
+  { path: '/about', label: '关于本站' },
 ] as const
 
 const store = useLocationStore()
@@ -65,6 +67,8 @@ const locationHint = computed(() => {
   display: flex;
   align-items: center;
   gap: 4px;
+  /* 导航项增至 7 个后窄屏会超出一行，允许换行以免整条溢出错位 */
+  flex-wrap: wrap;
 }
 
 .ft-nav__item {

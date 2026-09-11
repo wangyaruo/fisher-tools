@@ -34,6 +34,18 @@ export const router = createRouter({
       component: () => import('@/views/glossary/GlossaryView.vue'),
       meta: { title: '垂钓术语表' },
     },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('@/views/about/AboutView.vue'),
+      meta: { title: '关于本站' },
+    },
+    {
+      path: '/scoring',
+      name: 'scoring',
+      component: () => import('@/views/scoring/ScoringView.vue'),
+      meta: { title: '指数解读' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: () => ({ top: 0 }),
