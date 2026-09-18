@@ -1,5 +1,6 @@
 import { BarChart, LineChart } from 'echarts/charts'
 import {
+  AriaComponent,
   GridComponent,
   LegendComponent,
   MarkAreaComponent,
@@ -10,6 +11,7 @@ import * as echarts from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import type { BarSeriesOption, LineSeriesOption } from 'echarts/charts'
 import type {
+  AriaComponentOption,
   GridComponentOption,
   LegendComponentOption,
   MarkAreaComponentOption,
@@ -31,6 +33,7 @@ echarts.use([
   LegendComponent,
   MarkLineComponent,
   MarkAreaComponent,
+  AriaComponent,
   CanvasRenderer,
 ])
 
@@ -42,6 +45,7 @@ export type ChartOption = ComposeOption<
   | LegendComponentOption
   | MarkLineComponentOption
   | MarkAreaComponentOption
+  | AriaComponentOption
 >
 
 /** 图表统一色板，与全局样式里的语义色保持一致 */
