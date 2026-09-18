@@ -77,11 +77,15 @@ const locationHint = computed(() => {
   color: var(--ft-text-muted);
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: color 0.15s;
+  border-radius: 8px 8px 0 0;
+  transition:
+    color 0.15s,
+    background-color 0.15s;
 }
 
 .ft-nav__item:hover {
-  color: var(--ft-text);
+  color: var(--ft-accent-strong);
+  background: rgb(225 245 238 / 55%);
 }
 
 .ft-nav__item.is-active {

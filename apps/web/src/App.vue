@@ -16,7 +16,11 @@ import AppHeader from '@/components/layout/AppHeader.vue'
     <AppHeader />
 
     <main>
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <Transition name="ft-page-fade" mode="out-in">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
     </main>
 
     <AppFooter />

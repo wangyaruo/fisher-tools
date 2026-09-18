@@ -14,7 +14,23 @@
   --ft-danger-soft: #fdeeee;
   --ft-radius: 10px;
   --ft-radius-lg: 14px;
-  --ft-shadow: 0 1px 2px rgb(28 43 47 / 6%);
+  /* 双层阴影：近处一层给边缘定义，远处一层给浮起感 */
+  --ft-shadow:
+    0 1px 2px rgb(28 43 47 / 5%),
+    0 6px 20px rgb(28 43 47 / 6%);
+
+  /*
+   * Element Plus 主色对齐站点 accent。
+   * 不覆盖时 EP 的聚焦环、选中态、加载图标是默认蓝色，
+   * 与全站绿色调性冲突。色阶按 EP 规则由 #0f6e56 混合白/黑推出。
+   */
+  --el-color-primary: #0f6e56;
+  --el-color-primary-light-3: #579a89;
+  --el-color-primary-light-5: #87b7ab;
+  --el-color-primary-light-7: #b7d3cd;
+  --el-color-primary-light-8: #cfe1de;
+  --el-color-primary-light-9: #e7efee;
+  --el-color-primary-dark-2: #0c5845;
 }
 
 * {
@@ -35,6 +51,49 @@ body {
 
 #app {
   min-height: 100vh;
+}
+
+/* 文本选中色与 accent 呼应，替代浏览器默认蓝 */
+::selection {
+  background: var(--ft-accent-soft);
+  color: var(--ft-accent-strong);
+}
+
+/* 细圆角滚动条，融入背景而非默认的灰块 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4d2d2;
+  border-radius: 5px;
+  border: 2px solid var(--ft-bg);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/*
+ * 路由切换过渡（配合 App.vue 的 <Transition name="ft-page-fade">）。
+ * out-in 模式：旧页先淡出、新页再淡入，避免两页同屏的布局跳动。
+ * 时长压短，频繁切页不拖沓。
+ */
+.ft-page-fade-enter-active,
+.ft-page-fade-leave-active {
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+
+.ft-page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.ft-page-fade-leave-to {
+  opacity: 0;
 }
 
 .ft-page {
