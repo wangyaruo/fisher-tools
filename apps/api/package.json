@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@fastify/compress": "^9.2.0",
     "@fastify/cors": "^10.0.2",
     "@fisher-tools/shared": "workspace:*",
     "fastify": "^5.2.1",

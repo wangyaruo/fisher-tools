@@ -1,3 +1,4 @@
+import compress from '@fastify/compress'
 import cors from '@fastify/cors'
 import Fastify, { type FastifyInstance } from 'fastify'
 import { ZodError } from 'zod'
@@ -36,6 +37,8 @@ export async function buildApp(): Promise<FastifyInstance> {
   })
 
   await app.register(cors, { origin: true })
+  // /api/overview 等聚合响应体积在百 KB 级，gzip 后传输量约降一个数量级
+  await app.register(compress)
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof ZodError) {
