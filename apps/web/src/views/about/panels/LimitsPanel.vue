@@ -37,13 +37,13 @@ import PanelCard from '@/components/base/PanelCard.vue'
   margin: 0 0 4px;
   font-size: 13px;
   font-weight: 500;
-  color: #6b4a12;
+  color: var(--ft-warn-text);
 }
 
 .ft-limit__detail {
   margin: 0;
   font-size: 13px;
   line-height: 1.75;
-  color: #6b4a12;
+  color: var(--ft-warn-text);
 }
 </style>

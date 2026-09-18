@@ -85,7 +85,7 @@ const locationHint = computed(() => {
 
 .ft-nav__item:hover {
   color: var(--ft-accent-strong);
-  background: rgb(250 232 239 / 70%);
+  background: var(--ft-nav-hover);
 }
 
 .ft-nav__item.is-active {

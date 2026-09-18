@@ -121,22 +121,22 @@ const topNegatives = computed(() => props.index.negatives.slice(0, 5))
 
 .ft-index__score.is-excellent,
 .ft-index__score.is-good {
-  border-color: #f2c3d3;
+  border-color: var(--ft-accent-border);
   background: var(--ft-accent-soft);
   color: var(--ft-accent-strong);
 }
 
 .ft-index__score.is-fair {
-  border-color: #ef9f27;
+  border-color: var(--ft-warn-border);
   background: var(--ft-warn-soft);
-  color: #6b4a12;
+  color: var(--ft-warn-text);
 }
 
 .ft-index__score.is-poor,
 .ft-index__score.is-bad {
-  border-color: #f09595;
+  border-color: var(--ft-danger-border);
   background: var(--ft-danger-soft);
-  color: #7a1717;
+  color: var(--ft-danger-text);
 }
 
 .ft-index__summary {

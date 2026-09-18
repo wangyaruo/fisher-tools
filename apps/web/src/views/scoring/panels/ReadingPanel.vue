@@ -65,10 +65,10 @@ import PanelCard from '@/components/base/PanelCard.vue'
   padding: 12px 14px;
   background: var(--ft-warn-soft);
   border-radius: var(--ft-radius);
-  color: #6b4a12;
+  color: var(--ft-warn-text);
 }
 
 .ft-prose .ft-note strong {
-  color: #6b4a12;
+  color: var(--ft-warn-text);
 }
 </style>

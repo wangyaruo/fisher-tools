@@ -62,7 +62,7 @@ const store = useLocationStore()
 <style scoped>
 .ft-header {
   /* 半透明 + 毛玻璃：sticky 页头下滚动的内容柔和透出，不再被白边硬切 */
-  background: rgb(255 255 255 / 86%);
+  background: var(--ft-header-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--ft-border);

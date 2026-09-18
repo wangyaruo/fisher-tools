@@ -79,7 +79,7 @@ const items = computed<KeyValueItem[]>(() => {
   min-width: 128px;
   padding: 14px;
   border-radius: var(--ft-radius);
-  border: 1px solid #f2c3d3;
+  border: 1px solid var(--ft-accent-border);
   background: var(--ft-accent-soft);
   color: var(--ft-accent-strong);
 }

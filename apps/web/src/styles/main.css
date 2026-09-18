@@ -12,6 +12,18 @@
   --ft-warn-soft: #fdf3e3;
   --ft-danger: #b02020;
   --ft-danger-soft: #fdeeee;
+  /* 语义色的文字与描边变体：token 化后暗色模式只需覆盖变量 */
+  --ft-warn-text: #6b4a12;
+  --ft-danger-text: #7a1717;
+  --ft-warn-border: #ef9f27;
+  --ft-danger-border: #f09595;
+  --ft-accent-border: #f2c3d3;
+  /* 布局与图形的场景色，同样按主题切换 */
+  --ft-header-bg: rgb(255 255 255 / 86%);
+  --ft-nav-hover: rgb(250 232 239 / 70%);
+  --ft-moon-lit: #faf5f3;
+  --ft-moon-dark: #ddd3d0;
+  --ft-scrollbar: #e0c8cd;
   --ft-radius: 10px;
   --ft-radius-lg: 14px;
   /* 双层阴影：近处一层给边缘定义，远处一层给浮起感；色相随主题转暖 */
@@ -31,6 +43,49 @@
   --el-color-primary-light-8: #f3dce3;
   --el-color-primary-light-9: #f9edf1;
   --el-color-primary-dark-2: #9a3f5d;
+}
+
+/*
+ * 暗色模式（跟随系统，main.ts 按 prefers-color-scheme 切换 html.dark）。
+ * 只覆盖变量、不改任何选择器：组件全部消费 token，换肤即换值。
+ * 玫瑰主色在暗底上提亮以保证对比度；EP 的 light-N 色阶在暗色下
+ * 语义反转为「比主色更深的玫瑰灰」，与 EP 官方暗色包约定一致。
+ */
+html.dark {
+  --ft-bg: #1c1517;
+  --ft-surface: #261d20;
+  --ft-surface-alt: #2d2226;
+  --ft-border: #473439;
+  --ft-text: #f0e6e8;
+  --ft-text-muted: #ad959c;
+  --ft-accent: #d4698e;
+  --ft-accent-soft: #3a2530;
+  --ft-accent-strong: #f2a8c4;
+  --ft-warn: #d99a45;
+  --ft-warn-soft: #3a2c1a;
+  --ft-danger: #e06a6a;
+  --ft-danger-soft: #3a2224;
+  --ft-warn-text: #f0c98a;
+  --ft-danger-text: #f0a3a3;
+  --ft-warn-border: #8a6a35;
+  --ft-danger-border: #7a3a3f;
+  --ft-accent-border: #6b3348;
+  --ft-header-bg: rgb(28 21 23 / 82%);
+  --ft-nav-hover: rgb(90 47 66 / 45%);
+  --ft-moon-lit: #f5e9d8;
+  --ft-moon-dark: #4a3f42;
+  --ft-scrollbar: #4a383d;
+  --ft-shadow:
+    0 1px 2px rgb(0 0 0 / 30%),
+    0 6px 20px rgb(0 0 0 / 35%);
+
+  --el-color-primary: #d4698e;
+  --el-color-primary-light-3: #6b3a4e;
+  --el-color-primary-light-5: #542e3f;
+  --el-color-primary-light-7: #412433;
+  --el-color-primary-light-8: #3a202c;
+  --el-color-primary-light-9: #331c26;
+  --el-color-primary-dark-2: #e285a6;
 }
 
 * {
@@ -66,7 +121,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #e0c8cd;
+  background: var(--ft-scrollbar);
   border-radius: 5px;
   border: 2px solid var(--ft-bg);
 }
@@ -275,7 +330,7 @@ body {
  */
 .ft-hl mark {
   background: var(--ft-warn-soft);
-  color: #6b4a12;
+  color: var(--ft-warn-text);
   padding: 0 2px;
   border-radius: 3px;
 }
@@ -287,7 +342,7 @@ body {
   background: var(--ft-warn-soft);
   border-radius: 6px;
   font-size: 12px;
-  color: #6b4a12;
+  color: var(--ft-warn-text);
   line-height: 1.7;
 }
 

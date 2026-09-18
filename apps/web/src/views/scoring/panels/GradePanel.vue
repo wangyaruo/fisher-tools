@@ -67,19 +67,19 @@ const rows = computed(() =>
 .ft-grade.is-good {
   background: var(--ft-accent-soft);
   color: var(--ft-accent-strong);
-  border: 1px solid #f2c3d3;
+  border: 1px solid var(--ft-accent-border);
 }
 
 .ft-grade.is-fair {
   background: var(--ft-warn-soft);
-  color: #6b4a12;
-  border: 1px solid #ef9f27;
+  color: var(--ft-warn-text);
+  border: 1px solid var(--ft-warn-border);
 }
 
 .ft-grade.is-poor,
 .ft-grade.is-bad {
   background: var(--ft-danger-soft);
-  color: #7a1717;
-  border: 1px solid #f09595;
+  color: var(--ft-danger-text);
+  border: 1px solid var(--ft-danger-border);
 }
 </style>

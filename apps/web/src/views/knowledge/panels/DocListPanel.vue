@@ -111,7 +111,7 @@ const title = computed(() => (props.searchResult ? '检索结果' : '文档'))
 }
 
 .ft-doc:hover {
-  border-color: #f2c3d3;
+  border-color: var(--ft-accent-border);
 }
 
 .ft-doc.is-active {

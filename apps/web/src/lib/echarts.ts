@@ -53,12 +53,9 @@ export const CHART_COLORS = {
   pressure: '#3d729e',
   temperature: '#c07a1f',
   apparent: '#978a83',
-  night: 'rgba(193, 79, 116, 0.06)',
   positive: '#c14f74',
   negative: '#5f7f95',
   neutral: '#978a83',
-  axis: '#a99b95',
-  split: '#f3e6e1',
   /** 时段轴：太阳相关 */
   sun: '#c07a1f',
   /** 时段轴：solunar 日月时段 */
@@ -67,8 +64,29 @@ export const CHART_COLORS = {
   tide: '#5b6ab0',
   /** 时段轴：推荐出钓窗口（主题玫瑰色，作为视觉主角） */
   best: '#c14f74',
+  /*
+   * 以下四色在暗底上会刺眼或消失，需随主题切换。
+   * 用 getter 在「构建 option 时」读取当前模式：模块加载时不求值，
+   * 系统主题在应用存活期间切换时，下一次重建 option 即可拿到新色。
+   */
+  get night(): string {
+    return isDark() ? 'rgba(212, 105, 142, 0.12)' : 'rgba(193, 79, 116, 0.06)'
+  },
+  get axis(): string {
+    return isDark() ? '#8d7a80' : '#a99b95'
+  },
+  get split(): string {
+    return isDark() ? '#3a2e32' : '#f3e6e1'
+  },
   /** 时段轴底轨 */
-  track: '#f6ebe7',
-} as const
+  get track(): string {
+    return isDark() ? '#3a2e32' : '#f6ebe7'
+  },
+}
+
+/** 与 main.ts 的暗色切换保持同一信源：根元素的 dark 类 */
+function isDark(): boolean {
+  return document.documentElement.classList.contains('dark')
+}
 
 export { echarts }
