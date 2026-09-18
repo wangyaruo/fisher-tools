@@ -76,7 +76,7 @@ defineProps<{
 
 .ft-cats__item.is-active {
   background: var(--ft-accent-soft);
-  border-color: #9fe1cb;
+  border-color: #f2c3d3;
   color: var(--ft-accent-strong);
   font-weight: 500;
 }

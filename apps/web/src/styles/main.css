@@ -1,36 +1,36 @@
 :root {
-  --ft-bg: #f4f7f7;
+  --ft-bg: #faf5f3;
   --ft-surface: #ffffff;
-  --ft-surface-alt: #fafcfc;
-  --ft-border: #e2e9e9;
-  --ft-text: #1c2b2f;
-  --ft-text-muted: #63777d;
-  --ft-accent: #0f6e56;
-  --ft-accent-soft: #e1f5ee;
-  --ft-accent-strong: #085041;
+  --ft-surface-alt: #fdf8f6;
+  --ft-border: #f0e1e1;
+  --ft-text: #2c2226;
+  --ft-text-muted: #7f6d73;
+  --ft-accent: #c14f74;
+  --ft-accent-soft: #fae8ef;
+  --ft-accent-strong: #9a3f5d;
   --ft-warn: #b45309;
   --ft-warn-soft: #fdf3e3;
   --ft-danger: #b02020;
   --ft-danger-soft: #fdeeee;
   --ft-radius: 10px;
   --ft-radius-lg: 14px;
-  /* 双层阴影：近处一层给边缘定义，远处一层给浮起感 */
+  /* 双层阴影：近处一层给边缘定义，远处一层给浮起感；色相随主题转暖 */
   --ft-shadow:
-    0 1px 2px rgb(28 43 47 / 5%),
-    0 6px 20px rgb(28 43 47 / 6%);
+    0 1px 2px rgb(44 34 38 / 5%),
+    0 6px 20px rgb(44 34 38 / 6%);
 
   /*
    * Element Plus 主色对齐站点 accent。
    * 不覆盖时 EP 的聚焦环、选中态、加载图标是默认蓝色，
-   * 与全站绿色调性冲突。色阶按 EP 规则由 #0f6e56 混合白/黑推出。
+   * 与全站玫瑰色调性冲突。色阶按 EP 规则由 #c14f74 混合白/黑推出。
    */
-  --el-color-primary: #0f6e56;
-  --el-color-primary-light-3: #579a89;
-  --el-color-primary-light-5: #87b7ab;
-  --el-color-primary-light-7: #b7d3cd;
-  --el-color-primary-light-8: #cfe1de;
-  --el-color-primary-light-9: #e7efee;
-  --el-color-primary-dark-2: #0c5845;
+  --el-color-primary: #c14f74;
+  --el-color-primary-light-3: #d4849e;
+  --el-color-primary-light-5: #e0a7ba;
+  --el-color-primary-light-7: #eccad6;
+  --el-color-primary-light-8: #f3dce3;
+  --el-color-primary-light-9: #f9edf1;
+  --el-color-primary-dark-2: #9a3f5d;
 }
 
 * {
@@ -66,7 +66,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c4d2d2;
+  background: #e0c8cd;
   border-radius: 5px;
   border: 2px solid var(--ft-bg);
 }

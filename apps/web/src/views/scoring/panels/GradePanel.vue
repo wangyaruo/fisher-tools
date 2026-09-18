@@ -67,7 +67,7 @@ const rows = computed(() =>
 .ft-grade.is-good {
   background: var(--ft-accent-soft);
   color: var(--ft-accent-strong);
-  border: 1px solid #9fe1cb;
+  border: 1px solid #f2c3d3;
 }
 
 .ft-grade.is-fair {

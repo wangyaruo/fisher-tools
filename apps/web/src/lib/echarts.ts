@@ -48,27 +48,27 @@ export type ChartOption = ComposeOption<
   | AriaComponentOption
 >
 
-/** 图表统一色板，与全局样式里的语义色保持一致 */
+/** 图表统一色板，与全局样式里的语义色保持一致（玫瑰暖色系） */
 export const CHART_COLORS = {
-  pressure: '#185FA5',
-  temperature: '#BA7517',
-  apparent: '#888780',
-  night: 'rgba(24, 95, 165, 0.07)',
-  positive: '#0F6E56',
-  negative: '#B02020',
-  neutral: '#888780',
-  axis: '#8a9aa0',
-  split: '#e8eeee',
+  pressure: '#3d729e',
+  temperature: '#c07a1f',
+  apparent: '#978a83',
+  night: 'rgba(193, 79, 116, 0.06)',
+  positive: '#c14f74',
+  negative: '#5f7f95',
+  neutral: '#978a83',
+  axis: '#a99b95',
+  split: '#f3e6e1',
   /** 时段轴：太阳相关 */
-  sun: '#BA7517',
+  sun: '#c07a1f',
   /** 时段轴：solunar 日月时段 */
-  solunar: '#0F6E56',
+  solunar: '#9a6fc0',
   /** 时段轴：潮汐窗口 */
-  tide: '#5B54A6',
-  /** 时段轴：推荐出钓窗口 */
-  best: '#185FA5',
+  tide: '#5b6ab0',
+  /** 时段轴：推荐出钓窗口（主题玫瑰色，作为视觉主角） */
+  best: '#c14f74',
   /** 时段轴底轨 */
-  track: '#eef3f3',
+  track: '#f6ebe7',
 } as const
 
 export { echarts }

@@ -121,7 +121,7 @@ const topNegatives = computed(() => props.index.negatives.slice(0, 5))
 
 .ft-index__score.is-excellent,
 .ft-index__score.is-good {
-  border-color: #9fe1cb;
+  border-color: #f2c3d3;
   background: var(--ft-accent-soft);
   color: var(--ft-accent-strong);
 }

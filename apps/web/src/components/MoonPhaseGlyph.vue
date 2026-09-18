@@ -69,11 +69,11 @@ const ariaLabel = computed(() => {
 
 <style scoped>
 .ft-moon__disc {
-  fill: #cfd8dc;
+  fill: #ddd3d0;
 }
 
 .ft-moon__lit {
-  fill: #f2f6f7;
+  fill: #faf5f3;
   stroke: none;
 }
 
