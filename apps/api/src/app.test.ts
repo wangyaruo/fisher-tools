@@ -82,9 +82,9 @@ describe('HTTP 层', () => {
       expect(second.body).toBe('')
     })
 
-    it('列表返回 42 篇，支持分类过滤', async () => {
+    it('列表返回 48 篇，支持分类过滤', async () => {
       const all = await app.inject({ method: 'GET', url: '/api/knowledge' })
-      expect(all.json().total).toBe(42)
+      expect(all.json().total).toBe(48)
 
       const filtered = await app.inject({
         method: 'GET',
@@ -92,7 +92,7 @@ describe('HTTP 层', () => {
       })
       const body = filtered.json()
       expect(body.total).toBeGreaterThan(0)
-      expect(body.total).toBeLessThan(42)
+      expect(body.total).toBeLessThan(48)
       expect(body.items.every((item: { category: string }) => item.category === 'safety')).toBe(
         true,
       )

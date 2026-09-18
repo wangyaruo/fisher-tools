@@ -11,10 +11,10 @@ import {
  * 整页 500，而类型检查测不出这类失败，因此解析正确性必须有测试覆盖。
  */
 describe('知识库内容（真实 Markdown 文件）', () => {
-  it('42 篇文档全部通过 frontmatter 校验，字段完整', async () => {
+  it('48 篇文档全部通过 frontmatter 校验，字段完整', async () => {
     const docs = await loadKnowledgeDocs()
 
-    expect(docs).toHaveLength(42)
+    expect(docs).toHaveLength(48)
     for (const doc of docs) {
       expect(doc.slug.length).toBeGreaterThan(0)
       expect(doc.title.length).toBeGreaterThan(0)
