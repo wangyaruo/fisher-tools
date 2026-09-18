@@ -44,6 +44,12 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
   const detailError = ref<string | null>(null)
 
   /**
+   * 正文前端缓存。知识库内容只随部署变化，同一篇重复打开不必再走网络；
+   * 即使后端有 ETag，304 也仍是一次往返。总量 48 篇有界，无需淘汰策略。
+   */
+  const docCache = new Map<string, KnowledgeDoc>()
+
+  /**
    * 分类过滤在前端完成：知识库体量小，一次取回后本地筛选比每次往返更快，
    * 也让切换分类没有等待感。
    */
@@ -92,10 +98,18 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
       return
     }
 
+    const cached = docCache.get(slug)
+    if (cached) {
+      detail.value = cached
+      detailError.value = null
+      return
+    }
+
     detailLoading.value = true
     detailError.value = null
     try {
       detail.value = await api.knowledgeDoc(slug)
+      docCache.set(slug, detail.value)
     } catch (caught) {
       detail.value = null
       detailError.value = caught instanceof ApiError ? caught.message : '文档加载失败'
