@@ -19,6 +19,12 @@ export const useOverviewStore = defineStore('overview', () => {
   const error = ref<string | null>(null)
   const loadedAt = ref<number | null>(null)
 
+  /**
+   * 数据陈旧阈值。总览是「某个时刻」的快照，页面挂在后台过夜后
+   * 「此刻」早已改变；回到前台且数据超过该阈值时自动重取。
+   */
+  const STALE_MS = 10 * 60 * 1000
+
   let controller: AbortController | null = null
 
   async function load(): Promise<void> {
@@ -50,6 +56,17 @@ export const useOverviewStore = defineStore('overview', () => {
     () => void load(),
     { immediate: true },
   )
+
+  // store 是应用级单例，监听随应用同寿，无需额外卸载
+  document.addEventListener('visibilitychange', () => {
+    if (
+      document.visibilityState === 'visible' &&
+      loadedAt.value !== null &&
+      Date.now() - loadedAt.value > STALE_MS
+    ) {
+      void load()
+    }
+  })
 
   return { data, loading, error, loadedAt, reload: load }
 })
