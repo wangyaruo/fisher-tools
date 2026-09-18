@@ -24,6 +24,13 @@ export class TtlCache {
   private misses = 0
   private inflightDeduped = 0
 
+  /**
+   * @param maxEntries 容量上限。key 由坐标与时刻组合而成，长期运行若不设上限，
+   *   内存会随不同钓点 × 时刻的组合单调增长；pruneExpired 只在 stats() 时触发，
+   *   不足以约束写入路径。默认 500 条对单进程自用足够宽裕。
+   */
+  constructor(private readonly maxEntries = 500) {}
+
   get<T>(key: string): T | null {
     const entry = this.store.get(key)
     if (!entry) return null
@@ -35,6 +42,14 @@ export class TtlCache {
   }
 
   set<T>(key: string, value: T, ttlMs: number): void {
+    if (this.store.size >= this.maxEntries) {
+      this.pruneExpired()
+      // 清理过期后仍满：按插入序淘汰最早写入的条目（Map 迭代序即插入序）
+      for (const oldest of this.store.keys()) {
+        if (this.store.size < this.maxEntries) break
+        this.store.delete(oldest)
+      }
+    }
     this.store.set(key, { value, expiresAt: Date.now() + ttlMs })
   }
 
