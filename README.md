@@ -1,5 +1,7 @@
 # 钓鱼助手（fisher-tools）
 
+[![CI](https://github.com/wangyaruo/fisher-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/wangyaruo/fisher-tools/actions/workflows/ci.yml)
+
 一个把「今天能不能去钓、几点出门、为什么」拆开讲清楚的垂钓辅助工具。
 
 不做「鱼获保证」式的结论输出：所有评分与时段都给出计算依据、输入快照与局限性说明，
@@ -13,9 +15,10 @@
 | 气象曲线 | 72 小时站点气压曲线、气温与体感温度（夜间区间标注）、逐日昼夜温差、逐日明细表、海洋数据（浪高 / 浪周期 / 海表水温） |
 | 日月与潮汐 | 月相可视化（按相位实算形状）、24 小时时段轴、太阳时刻、月亮时刻、日月活跃时段明细、潮汐窗口与精度声明 |
 | 知识库 | 7 个分类、全文检索（标题权重 3 / 标签权重 2 / 正文权重 1）、命中片段高亮、Markdown 正文渲染 |
-| 术语表 | 6 组 119 条垂钓术语，本地即时过滤，纯静态 |
+| 术语表 | 6 组 131 条垂钓术语，本地即时过滤，纯静态 |
 | 指数解读 | 权重表、计算公式、等级阈值与逐因子解读，数值直接取自 shared 评分常量 |
 | 关于本站 | 数据来源、精度边界、验证记录与免责声明 |
+| 个性化与体验 | 自定义钓点（坐标本地持久化）、深色模式跟随系统、键盘焦点环与减弱动画支持 |
 
 核心的「24 小时时段轴」把推荐出钓窗口、日月时段、黄金时段、民用晨昏与潮汐窗口
 叠在同一条时间轴上，直接回答「几点出门」——分散成多张表时，用户必须自己在
@@ -23,8 +26,8 @@
 
 ## 技术栈
 
-- **前端**：Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + ECharts（按需注册）
-- **后端**：Node.js + Fastify + TypeScript + Zod
+- **前端**：Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus（按需注册）+ ECharts（按需注册）
+- **后端**：Node.js + Fastify + TypeScript + Zod（gzip 压缩、ETag 缓存、内存缓存并发去重）
 - **共享层**：`packages/shared` 同时被前后端引用，提供 Zod Schema、天文算法与钓鱼指数评分核心
 - **包管理**：pnpm workspace
 
@@ -41,7 +44,7 @@ apps/
     src/components/     基础件（base/）、布局件（layout/）与业务件
     src/views/          七个页面（总览 / 气象 / 日月潮汐 / 知识库 / 术语表 / 关于 / 指数解读），
                         每个视图 = 一个编排文件 + 同目录 panels/
-    src/stores/         钓点、总览与知识库数据
+    src/stores/         钓点（预设 + 自定义）、总览与知识库数据
     src/utils/          格式化与图表构建函数
     src/data/           静态内容（术语表、关于页文案）
 packages/
@@ -59,7 +62,7 @@ pnpm install
 pnpm dev
 
 # 或分别启动
-pnpm dev:api     # http://127.0.0.1:3001
+pnpm dev:api     # http://localhost:3001
 pnpm dev:web     # http://localhost:5173
 ```
 
@@ -132,8 +135,12 @@ pnpm format           # Prettier 格式化
 ## 开发约定
 
 - 提交信息遵循 Conventional Commits，按「一个逻辑变更一个提交」拆分。
-- 提交前至少跑通 `pnpm typecheck`；涉及评分或天文算法改动时跑 `pnpm test`。
+- 提交前至少跑通 `pnpm typecheck`；测试全量 92 项（shared 30 + api 25 + web 37），
+  涉及评分或天文算法改动时必须跑 `pnpm test`。
+- GitHub Actions 在每次推送时自动执行 install、typecheck、test 与 build（见 `.github/workflows/ci.yml`）。
 - 评分权重表调整前先看 `packages/shared/src/scoring/fishing-index.test.ts` 的基准用例。
+- UI 颜色一律走 `src/styles/main.css` 的 CSS token，并在 `html.dark` 下同步覆盖；
+  Element Plus 组件按需注册，新增组件时在 `main.ts` 同步加注册与样式入口。
 
 更多细节见 [`docs/architecture.md`](docs/architecture.md) 与
 [`docs/data-sources.md`](docs/data-sources.md)。
