@@ -78,3 +78,39 @@ export const PRESET_LOCATIONS: PresetLocation[] = [
 ]
 
 export const DEFAULT_LOCATION_KEY = 'shenzhen'
+
+/** 自定义钓点在 store 与下拉列表中使用的固定 key */
+export const CUSTOM_LOCATION_KEY = 'custom'
+
+/**
+ * 用户自建的钓点。与预设项的差异是没有 key 与 note：
+ * 它由用户数据生成，key 固定为 CUSTOM_LOCATION_KEY。
+ */
+export interface CustomLocation {
+  name: string
+  latitude: number
+  longitude: number
+  timezone: string
+  /** 水域类型，决定潮汐与海表数据是否相关 */
+  water: '淡水' | '沿海' | '河口'
+}
+
+/** 校验并规整一份自定义钓点数据；任何字段不合法都返回 null */
+export function sanitizeCustomLocation(input: unknown): CustomLocation | null {
+  if (typeof input !== 'object' || input === null) return null
+  const candidate = input as Record<string, unknown>
+
+  const name = typeof candidate.name === 'string' ? candidate.name.trim() : ''
+  const latitude = Number(candidate.latitude)
+  const longitude = Number(candidate.longitude)
+  const timezone = typeof candidate.timezone === 'string' ? candidate.timezone.trim() : ''
+  const water = candidate.water
+
+  if (name.length === 0 || name.length > 20) return null
+  if (!Number.isFinite(latitude) || latitude < -90 || latitude > 90) return null
+  if (!Number.isFinite(longitude) || longitude < -180 || longitude > 180) return null
+  if (timezone.length === 0) return null
+  if (water !== '淡水' && water !== '沿海' && water !== '河口') return null
+
+  return { name, latitude, longitude, timezone, water }
+}
