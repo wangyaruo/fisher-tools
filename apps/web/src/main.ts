@@ -1,9 +1,32 @@
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import ElementPlus from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import 'element-plus/dist/index.css'
-// EP 官方暗色变量包：在 html.dark 下生效，必须放在全量样式之后
+import {
+  ElAlert,
+  ElButton,
+  ElConfigProvider,
+  ElDatePicker,
+  ElEmpty,
+  ElInput,
+  ElOption,
+  ElSelect,
+  ElSkeleton,
+  ElTable,
+  ElTableColumn,
+  ElTag,
+} from 'element-plus'
+// 按组件引入样式：每个入口自带依赖链（如 date-picker 会拉入 popper 与面板样式），
+// 不再整包引入 dist/index.css。新增组件时注册与样式要同步加。
+import 'element-plus/es/components/alert/style/css'
+import 'element-plus/es/components/button/style/css'
+import 'element-plus/es/components/date-picker/style/css'
+import 'element-plus/es/components/empty/style/css'
+import 'element-plus/es/components/input/style/css'
+import 'element-plus/es/components/option/style/css'
+import 'element-plus/es/components/select/style/css'
+import 'element-plus/es/components/skeleton/style/css'
+import 'element-plus/es/components/table/style/css'
+import 'element-plus/es/components/tag/style/css'
+// EP 官方暗色变量包：在 html.dark 下生效，必须放在组件样式之后
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import App from './App.vue'
 import { router } from './router'
@@ -22,7 +45,24 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-// 全量引入 Element Plus 并固定中文语言包，保证日期与分页等内置文案一致
-app.use(ElementPlus, { locale: zhCn })
+
+// 按需注册 EP 组件（全站仅用这 12 个，见组件用量盘点）。
+// 中文语言包经 App.vue 根部的 <el-config-provider> 下发。
+for (const component of [
+  ElAlert,
+  ElButton,
+  ElConfigProvider,
+  ElDatePicker,
+  ElEmpty,
+  ElInput,
+  ElOption,
+  ElSelect,
+  ElSkeleton,
+  ElTable,
+  ElTableColumn,
+  ElTag,
+]) {
+  app.use(component)
+}
 
 app.mount('#app')

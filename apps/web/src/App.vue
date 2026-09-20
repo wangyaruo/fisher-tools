@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 
@@ -12,19 +13,22 @@ import AppHeader from '@/components/layout/AppHeader.vue'
 </script>
 
 <template>
-  <div class="ft-shell">
-    <AppHeader />
+  <!-- 按需注册后语言包不再经 app.use(ElementPlus) 下发，改由根部的配置提供者注入 -->
+  <el-config-provider :locale="zhCn">
+    <div class="ft-shell">
+      <AppHeader />
 
-    <main>
-      <RouterView v-slot="{ Component }">
-        <Transition name="ft-page-fade" mode="out-in">
-          <component :is="Component" />
-        </Transition>
-      </RouterView>
-    </main>
+      <main>
+        <RouterView v-slot="{ Component }">
+          <Transition name="ft-page-fade" mode="out-in">
+            <component :is="Component" />
+          </Transition>
+        </RouterView>
+      </main>
 
-    <AppFooter />
-  </div>
+      <AppFooter />
+    </div>
+  </el-config-provider>
 </template>
 
 <style scoped>
