@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { PRESET_LOCATIONS } from '@/config/locations'
+import { ref } from 'vue'
+import {
+  CUSTOM_LOCATION_KEY,
+  PRESET_LOCATIONS,
+  sanitizeCustomLocation,
+} from '@/config/locations'
 import { useLocationStore } from '@/stores/location'
 import AppNav from './AppNav.vue'
 
@@ -11,6 +16,41 @@ import AppNav from './AppNav.vue'
  * 日期选择器允许留空，留空即「此刻」，这也是最常见的用法。
  */
 const store = useLocationStore()
+
+/** 自定义钓点对话框的表单状态。坐标用字符串承接输入，保存时才校验转换 */
+const dialogVisible = ref(false)
+const formName = ref('')
+const formLat = ref('')
+const formLng = ref('')
+const formWater = ref<'淡水' | '沿海' | '河口'>('淡水')
+const formError = ref('')
+
+function openCustomDialog(): void {
+  // 已有自定义钓点时回填，便于在原基础上微调
+  formName.value = store.custom?.name ?? ''
+  formLat.value = store.custom ? String(store.custom.latitude) : ''
+  formLng.value = store.custom ? String(store.custom.longitude) : ''
+  formWater.value = store.custom?.water ?? '淡水'
+  formError.value = ''
+  dialogVisible.value = true
+}
+
+function saveCustom(): void {
+  const candidate = sanitizeCustomLocation({
+    name: formName.value,
+    latitude: formLat.value,
+    longitude: formLng.value,
+    // 时刻语义全站统一为东八区墙上时间，时区不开放编辑
+    timezone: 'Asia/Shanghai',
+    water: formWater.value,
+  })
+  if (!candidate) {
+    formError.value = '请检查输入：名称 1-20 字、纬度 -90 至 90、经度 -180 至 180'
+    return
+  }
+  store.setCustom(candidate)
+  dialogVisible.value = false
+}
 </script>
 
 <template>
@@ -39,7 +79,15 @@ const store = useLocationStore()
             :label="`${item.name}（${item.water}）`"
             :value="item.key"
           />
+          <el-option
+            v-if="store.custom"
+            :key="CUSTOM_LOCATION_KEY"
+            :label="`${store.custom.name}（自定义·${store.custom.water}）`"
+            :value="CUSTOM_LOCATION_KEY"
+          />
         </el-select>
+
+        <el-button text @click="openCustomDialog">自定义钓点</el-button>
 
         <el-date-picker
           :model-value="store.at"
@@ -56,6 +104,39 @@ const store = useLocationStore()
     </div>
 
     <AppNav />
+
+    <el-dialog v-model="dialogVisible" title="自定义钓点" width="380px" append-to-body>
+      <div class="ft-custom-form">
+        <label>
+          名称
+          <el-input v-model="formName" placeholder="例如：西丽水库" maxlength="20" />
+        </label>
+        <label>
+          纬度
+          <el-input v-model="formLat" placeholder="-90 ~ 90，如 22.58" />
+        </label>
+        <label>
+          经度
+          <el-input v-model="formLng" placeholder="-180 ~ 180，如 113.95" />
+        </label>
+        <label>
+          水域
+          <el-select v-model="formWater">
+            <el-option label="淡水" value="淡水" />
+            <el-option label="沿海" value="沿海" />
+            <el-option label="河口" value="河口" />
+          </el-select>
+        </label>
+        <p class="ft-custom-form__hint">
+          水域类型决定海洋面板是否展示；时刻与日出日落按东八区计算。
+        </p>
+        <p v-if="formError" class="ft-custom-form__error">{{ formError }}</p>
+      </div>
+      <template #footer>
+        <el-button text @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveCustom">保存并使用</el-button>
+      </template>
+    </el-dialog>
   </header>
 </template>
 
@@ -126,5 +207,32 @@ const store = useLocationStore()
 /* Element Plus 给日期选择器写了内联宽度，必须用 !important 覆盖 */
 .ft-controls__picker {
   width: 220px !important;
+}
+
+.ft-custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ft-custom-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ft-text-muted);
+}
+
+.ft-custom-form__hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ft-text-muted);
+  line-height: 1.6;
+}
+
+.ft-custom-form__error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ft-danger-text);
 }
 </style>

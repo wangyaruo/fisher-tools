@@ -5,6 +5,7 @@ import {
   ElButton,
   ElConfigProvider,
   ElDatePicker,
+  ElDialog,
   ElEmpty,
   ElInput,
   ElOption,
@@ -19,6 +20,7 @@ import {
 import 'element-plus/es/components/alert/style/css'
 import 'element-plus/es/components/button/style/css'
 import 'element-plus/es/components/date-picker/style/css'
+import 'element-plus/es/components/dialog/style/css'
 import 'element-plus/es/components/empty/style/css'
 import 'element-plus/es/components/input/style/css'
 import 'element-plus/es/components/option/style/css'
@@ -46,13 +48,14 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
-// 按需注册 EP 组件（全站仅用这 12 个，见组件用量盘点）。
+// 按需注册 EP 组件（全站仅用这 13 个，见组件用量盘点）。
 // 中文语言包经 App.vue 根部的 <el-config-provider> 下发。
 for (const component of [
   ElAlert,
   ElButton,
   ElConfigProvider,
   ElDatePicker,
+  ElDialog,
   ElEmpty,
   ElInput,
   ElOption,
