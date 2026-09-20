@@ -114,6 +114,23 @@ body {
   color: var(--ft-accent-strong);
 }
 
+/*
+ * 键盘导航的焦点环。鼠标点击不触发（:focus-visible 的语义即在此），
+ * 颜色跟随主题 accent，暗色下同样可见。
+ */
+:focus-visible {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 2px;
+}
+
+/* 用户声明减少动态效果时，关闭路由切换的位移动画 */
+@media (prefers-reduced-motion: reduce) {
+  .ft-page-fade-enter-active,
+  .ft-page-fade-leave-active {
+    transition: none;
+  }
+}
+
 /* 细圆角滚动条，融入背景而非默认的灰块 */
 ::-webkit-scrollbar {
   width: 10px;
